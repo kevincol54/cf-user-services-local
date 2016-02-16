@@ -1,6 +1,7 @@
-var test = require('tap').test
-var buildConfigs = require('../distribution')
-var mockInput = {
+const test = require('tap').test
+const rewire = require('rewire')
+const buildConfigs = require('../distribution')
+const mockInput = {
   'couchdb': {
     username: 'admin',
     password: 'admin',
@@ -15,7 +16,7 @@ var mockInput = {
   }
 }
 
-var expectedOutput = {
+const expectedOutput = {
   'couchdb': {
     host: 'couchdb-develop.net',
     password: 'password',
@@ -42,7 +43,17 @@ test('index.js', (t) => {
   })
 
   t.test('Should return user services if exists', (tt) => {
-    var results = buildConfigs(mockInput)
+    var buildConfigsMock = rewire('../distribution')
+    var configServicesMock = {
+      mysql: {
+        credentials: expectedOutput.mysql
+      },
+      couchdb: {
+        credentials: expectedOutput.couchdb
+      }
+    }
+    buildConfigsMock.__set__('configServices', configServicesMock)
+    var results = buildConfigsMock(mockInput)
     tt.same(results, expectedOutput, 'expect user services returned')
     tt.end()
   })

@@ -1,9 +1,9 @@
 const {keys} = require('ramda')
+const appEnv = require('cfenv').getAppEnv()
+const configServices = appEnv.getServices()
 
 const getCredentials = (userService) => {
-  const appEnv = require('cfenv').getAppEnv()
-  const config_services = appEnv.getServices()
-  return (keys(config_services).length > 0) ? config_services[userService].credentials : undefined
+  return (keys(configServices).length > 0) ? configServices[userService].credentials : undefined
 }
 
 module.exports = (input) => {
