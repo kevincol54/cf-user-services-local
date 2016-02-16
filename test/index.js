@@ -37,24 +37,21 @@ const expectedOutput = {
 
 test('index.js', (t) => {
   t.test('Should return default configs if no user services', (tt) => {
-    var results = buildConfigs(mockInput)
-    tt.same(results, mockInput, 'expect default configs returned')
+    tt.same(buildConfigs(mockInput), mockInput, 'expect default configs returned')
     tt.end()
   })
 
   t.test('Should return user services if exists', (tt) => {
     var buildConfigsMock = rewire('../distribution')
-    var configServicesMock = {
+    buildConfigsMock.__set__('configServices', {
       mysql: {
         credentials: expectedOutput.mysql
       },
       couchdb: {
         credentials: expectedOutput.couchdb
       }
-    }
-    buildConfigsMock.__set__('configServices', configServicesMock)
-    var results = buildConfigsMock(mockInput)
-    tt.same(results, expectedOutput, 'expect user services returned')
+    })
+    tt.same(buildConfigsMock(mockInput), expectedOutput, 'expect user services returned')
     tt.end()
   })
 
