@@ -1,0 +1,40 @@
+{
+  "name": "cf-user-services-local",
+  "version": "1.0.0",
+  "description": "Used to tie into CloudFoundry user services for envs when deployed or revert to default envs for local development",
+  "main": "./distribution/index.js",
+  "scripts": {
+    "start": "node ./distribution/index.js",
+    "test": "npm run build && tap ./test/*.js",
+    "test:cov": "tap ./test/*.js --cov",
+    "test:cov-details": "tap ./test/*.js --cov  --coverage-report=lcov",
+    "build": "babel source --presets babel-preset-es2015 --out-dir distribution",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "CloudFoundry",
+    "cloud",
+    "foundry",
+    "envs",
+    "env",
+    "local",
+    "development",
+    "user",
+    "services"
+  ],
+  "author": "Kevin Collins <kevincol54@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cfenv": "^1.0.3",
+    "ramda": "^0.19.1"
+  },
+  "engines": {
+    "node": "4.3.x",
+    "npm": "2.14.x"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-preset-es2015": "^6.5.0",
+    "tap": "^2.1.1"
+  }
+}
