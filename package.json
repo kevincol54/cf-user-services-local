@@ -4,12 +4,13 @@
   "description": "Used to tie into CloudFoundry user services for envs when deployed or revert to default envs for local development",
   "main": "./distribution/index.js",
   "scripts": {
+    "build": "babel source --presets babel-preset-es2015 --out-dir distribution",
+    "lint": "standard *.js source/*.js test/*.js",
+    "prepublish": "npm run build",
     "start": "node ./distribution/index.js",
     "test": "npm run build && tap ./test/*.js",
     "test:cov": "tap ./test/*.js --cov",
-    "test:cov-details": "tap ./test/*.js --cov  --coverage-report=lcov",
-    "build": "babel source --presets babel-preset-es2015 --out-dir distribution",
-    "prepublish": "npm run build"
+    "test:cov-details": "tap ./test/*.js --cov  --coverage-report=lcov"
   },
   "keywords": [
     "CloudFoundry",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-preset-es2015": "^6.5.0",
+    "standard": "^6.0.5",
     "tap": "^2.1.1"
   }
 }
