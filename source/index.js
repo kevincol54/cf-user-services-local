@@ -9,8 +9,7 @@ const getCredentials = (userService) => {
 module.exports = (input) => {
   let returnObj = {}
   keys(input).map((serviceName) => {
-    const userService = getCredentials(serviceName)
-    returnObj[serviceName] = userService || input[serviceName]
+    returnObj[serviceName] = getCredentials(serviceName) || input[serviceName]
   })
   return returnObj
 }
