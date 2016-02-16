@@ -1,5 +1,5 @@
 var test = require('tap').test
-var buildCreds = require('../distribution')
+var buildConfigs = require('../distribution')
 var mockInput = {
   'couchdb': {
     username: 'admin',
@@ -35,8 +35,17 @@ var expectedOutput = {
 }
 
 test('index.js', (t) => {
-  var results = buildCreds(mockInput)
-  t.same(results, expectedOutput, 'Should return user service if exists')
-  t.ok(true, 'dummy test to make sure tests are setup right')
+  t.test('Should return default configs if no user services', (tt) => {
+    var results = buildConfigs(mockInput)
+    tt.same(results, mockInput, 'expect default configs returned')
+    tt.end()
+  })
+
+  t.test('Should return user services if exists', (tt) => {
+    var results = buildConfigs(mockInput)
+    tt.same(results, expectedOutput, 'expect user services returned')
+    tt.end()
+  })
+
   t.end()
 })

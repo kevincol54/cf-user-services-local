@@ -1,4 +1,4 @@
-const {map, compose, chain, keys} = require('ramda')
+const {compose, keys} = require('ramda')
 
 const getCredentials = (userService) => {
   const appEnv = require("cfenv").getAppEnv();
