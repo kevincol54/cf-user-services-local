@@ -10,6 +10,12 @@ Pass your default configs into this module and have either, the default configs 
 
 ## Usage
 
+### Installation
+```
+npm install cf-user-services-local
+```
+
+### Example
 ```js
 // These are your apps default configs
 // The keys of this `defaultConfigs` object should be named the same as their associated User Provided service in CloudFoundry
