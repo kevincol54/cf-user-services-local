@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Used to tie into CloudFoundry user services for envs when deployed or revert to default envs for local development",
   "main": "./distribution/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevincol54/cf-user-services-local"
+  },
   "scripts": {
     "build": "babel source --presets babel-preset-es2015 --out-dir distribution",
     "lint": "standard *.js source/*.js test/*.js",
