@@ -5,7 +5,7 @@ const configServices = appEnv.getServices()
 const getCredentials = (userService) => {
   console.log("userService", userService);
   console.log("configServices[userService]", configServices[userService]);
-  return (keys(configServices).length > 0) ? configServices[userService].credentials : undefined
+  return (keys(configServices).length > 0) ? ( (configServices[userService]) ? configServices[userService].credentials : undefined) : undefined
 }
 
 module.exports = (input) => {
