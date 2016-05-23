@@ -1,6 +1,6 @@
 {
   "name": "cf-user-services-local",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Used to tie into CloudFoundry user services for envs when deployed or revert to default envs for local development",
   "main": "./distribution/index.js",
   "repository": {
