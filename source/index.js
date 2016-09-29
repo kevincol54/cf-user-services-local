@@ -1,4 +1,4 @@
-const { keys, compose, mapObjIndexed } = require('ramda')
+const { keys, mapObjIndexed } = require('ramda')
 const cfenv = require('cfenv');
 
 const getCredentials = (userService) => {
