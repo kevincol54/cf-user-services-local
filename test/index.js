@@ -1,5 +1,6 @@
 const test = require('tap').test
 const rewire = require('rewire')
+const sinon = require('sinon');
 const buildConfigs = require('../distribution')
 const mockInput = {
   'couchdb': {
@@ -43,17 +44,52 @@ test('index.js', (t) => {
 
   t.test('Should return user services if exists', (tt) => {
     var buildConfigsMock = rewire('../distribution')
-    buildConfigsMock.__set__('configServices', {
+    const getServicesStub = sinon.stub().returns({
       mysql: {
         credentials: expectedOutput.mysql
       },
       couchdb: {
         credentials: expectedOutput.couchdb
-      }
+      }     
+    });
+    const getAppEnvStub = sinon.stub().returns({
+      getServices: getServicesStub
+    });
+    buildConfigsMock.__set__('cfenv', {
+      getAppEnv: getAppEnvStub
     })
     tt.same(buildConfigsMock(mockInput), expectedOutput, 'expect user services returned')
     tt.end()
   })
 
+  t.test('testing from process.env', tt => {
+    process.env.VCAP_SERVICES = JSON.stringify({
+      'user-provided': [{
+        credentials: {
+          database: 'eirenerx_db',
+          host: 'db.foo.com',
+          password: 'bar',
+          port: '3306',
+          ssl_ca: 'ssl_ca',
+          username: 'user'
+        },
+        name: 'mysql-eirenerx-integrations-rds'
+      }]
+    });
+    const buildConfigsMock = require('../distribution')
+    const r = buildConfigsMock({ 'mysql-eirenerx-integrations-rds' : { } })
+    const assert = { 
+      'mysql-eirenerx-integrations-rds':{ 
+        database: 'eirenerx_db',
+        host: 'db.foo.com',
+        password: 'bar',
+        port: '3306',
+        ssl_ca: 'ssl_ca',
+        username: 'user' 
+      } 
+    };
+    tt.same(r, assert, 'should build out')
+    tt.end();
+  });
   t.end()
 })

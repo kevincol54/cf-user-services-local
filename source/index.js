@@ -1,15 +1,14 @@
-const { keys } = require('ramda')
-const appEnv = require('cfenv').getAppEnv()
-const configServices = appEnv.getServices()
+const { keys, compose, mapObjIndexed } = require('ramda')
+const cfenv = require('cfenv');
 
 const getCredentials = (userService) => {
+  const configServices = cfenv.getAppEnv().getServices();
   return (keys(configServices).length > 0) ? ( (configServices[userService]) ? configServices[userService].credentials : undefined ) : undefined
 }
 
-module.exports = (input) => {
-  let returnObj = {}
-  keys(input).map((serviceName) => {
-    returnObj[serviceName] = getCredentials(serviceName) || input[serviceName]
-  })
-  return returnObj
+const replace = (num, serviceName, obj) => { 
+  const creds = getCredentials(serviceName) 
+  return creds ? creds : obj[serviceName]
 }
+
+module.exports = mapObjIndexed(replace)
