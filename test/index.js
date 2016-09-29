@@ -66,21 +66,21 @@ test('index.js', (t) => {
     process.env.VCAP_SERVICES = JSON.stringify({
       'user-provided': [{
         credentials: {
-          database: 'eirenerx_db',
+          database: 'db',
           host: 'db.foo.com',
           password: 'bar',
           port: '3306',
           ssl_ca: 'ssl_ca',
           username: 'user'
         },
-        name: 'mysql-eirenerx-integrations-rds'
+        name: 'mysql-rds'
       }]
     });
     const buildConfigsMock = require('../distribution')
-    const r = buildConfigsMock({ 'mysql-eirenerx-integrations-rds' : { } })
+    const r = buildConfigsMock({ 'mysql-rds' : { } })
     const assert = { 
-      'mysql-eirenerx-integrations-rds':{ 
-        database: 'eirenerx_db',
+      'mysql-rds':{ 
+        database: 'db',
         host: 'db.foo.com',
         password: 'bar',
         port: '3306',
