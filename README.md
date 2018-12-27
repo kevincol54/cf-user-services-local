@@ -4,7 +4,7 @@
 
 Simplifies the process of having your local(default configs) envs in the app and used during local development, but use your Cloud Foundry User Provided service when deployed. (You will need to bind your User Provided service to your app for this to work).
 
-Pass your default configs into this module and have either, the default configs or the cloud foundry user services returned depending on what env you are in.
+Pass your default configs into this module and have the UPS keys merged with the defaults where the UPS key takes priority.
 
 
 ## Usage
